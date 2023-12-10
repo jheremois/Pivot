@@ -1,35 +1,19 @@
 /**
- * Sample React Native App
+ * Sample React Native App with AR integration
  * https://github.com/facebook/react-native
- *
  * @format
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+import { SafeAreaView, StatusBar, useColorScheme, StyleSheet, Text } from 'react-native';
+import { ViroARSceneNavigator } from '@viro-community/react-viro';
+import Test from './src/components/Test';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-
   const backgroundStyle = {
-    backgroundColor: "#f090f0",
+    flex: 1,  // Add flex: 1 to make it take the full screen
+    backgroundColor: isDarkMode ? '#000000' : '#8AFF3E',
   };
 
   return (
@@ -38,34 +22,14 @@ function App(): JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <View>
-
-        </View>
-      </ScrollView>
+      <ViroARSceneNavigator initialScene={{ scene: Test }} style={{ flex: 1 }} />
     </SafeAreaView>
   );
 }
 
+
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+  // Define your styles if needed
 });
 
 export default App;

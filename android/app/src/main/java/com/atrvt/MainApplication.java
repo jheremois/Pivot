@@ -9,6 +9,9 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
 import java.util.List;
+// For viro React ->
+import com.viromedia.bridge.ReactViroPackage;
+// For viro React <-
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -23,6 +26,9 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
+          // For viro React ->
+            packages.add(new ReactViroPackage(ReactViroPackage.ViroPlatform.valueOf("AR")));
+          // For viro React <-
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           return packages;
@@ -42,6 +48,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected Boolean isHermesEnabled() {
           return BuildConfig.IS_HERMES_ENABLED;
         }
+
       };
 
   @Override
