@@ -1,35 +1,73 @@
-/**
- * Sample React Native App with AR integration
- * https://github.com/facebook/react-native
- * @format
- */
-
 import React from 'react';
-import { SafeAreaView, StatusBar, useColorScheme, StyleSheet, Text } from 'react-native';
-import { ViroARSceneNavigator } from '@viro-community/react-viro';
-import Test from './src/components/Test';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Pivot from './src/screens/Pivot';
+import Library from './src/screens/Library';
+import { Text } from 'react-native';
+import { BuildingLibraryIcon, CubeTransparentIcon } from "react-native-heroicons/outline";
 
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  const backgroundStyle = {
-    flex: 1,  // Add flex: 1 to make it take the full screen
-    backgroundColor: isDarkMode ? '#000000' : '#8AFF3E',
-  };
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
+function PivotTabs() {
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
+    <Tab.Navigator
+      initialRouteName="Library"
+      screenOptions={{
+          tabBarStyle: { backgroundColor: "#515151", height: 80, paddingVertical: 5, borderTopColor: '#f0f0f020',},
+          tabBarItemStyle: {justifyContent: 'center', alignItems: 'center'},
+          tabBarLabelStyle: {marginBottom: 5,},
+          headerShown: false,
+          tabBarActiveTintColor: "#f0f0f0", 
+          tabBarInactiveBackgroundColor: 'f0f0f880', 
+      }}
+    >
+      <Tab.Screen name="Library" component={Library} 
+        options={{
+          tabBarIcon: ()=>(
+            <BuildingLibraryIcon 
+              width={30} height={30} 
+              color="white"
+              fill="white" size={42}
+            />
+          ),
+          /* tabBarLabelStyle: {
+              display: "none"
+          } */
+        }}
       />
-      <ViroARSceneNavigator initialScene={{ scene: Test }} style={{ flex: 1 }} />
-    </SafeAreaView>
+      <Tab.Screen name="Pivot" component={Pivot}
+        options={{
+          tabBarIcon: ()=>(
+            <CubeTransparentIcon
+              width={30} height={30} 
+              color="white"
+              fill="white"
+              size={42}
+            />
+          ),
+          /* tabBarLabelStyle: {
+              display: "none"
+          } */
+        }}
+      />
+    </Tab.Navigator>
   );
 }
 
-
-const styles = StyleSheet.create({
-  // Define your styles if needed
-});
+function App(): JSX.Element {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="PivotTabs"
+          component={PivotTabs}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
 
 export default App;
